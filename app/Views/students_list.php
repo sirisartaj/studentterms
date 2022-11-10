@@ -259,7 +259,7 @@
                     <td><?php echo $student['Father_FullName']?></td>
                     <td><?php echo $student['Father_mobile_number'];?></td>
                     <td class="text-warning"><?php echo $student['term_name'];?></td>
-                    <td class="text-warning"><?php echo $student['followupon'];?></td>
+                    <td class="text-warning"><?php echo date('jS F, Y', strtotime($student['followupon']));?></td>
                     <td class="text-right">
 
          <a class="link-btn" data-rel="tooltip" data-placement="bottom" title="Follow Up" href="<?php echo site_url('/Followups/'.$student['student_id'].'/'.$student['id']);?>"><i class="icon-user-follow"></i></a>
