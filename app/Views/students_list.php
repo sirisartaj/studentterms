@@ -250,7 +250,7 @@
                   if($students): ?>
                     <?php foreach($students as $student): ?>
                   <tr>
-                    <td><div class="user-image"><span><?php echo $student['Student_Name'][0];?></span></div>
+                    <td><div class="user-image"><span><?php echo substr($student['Student_Name'], 0,1);?></span></div>
                       <?php echo $student['Student_Name'];?></td>
                     <td><?php echo $student['Course_Name'].', '.$student['Section_Name'];?></td>
                     <td><?php echo $student['admission_number'];?></td>
@@ -359,25 +359,20 @@
 <a href="https://sirians.xyz/dgtl/#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
 <?php echo view('js_footer');?>
 <script>
-  oTable = $('#input_buttons').DataTable();  
+   
 
   function searchtermchnage(id){
+    
+    oTable = $('#input_buttons').DataTable(); 
     alert(id.value);
     oTable.search(id.value).draw() ;
     /*$.ajax({
         method: "GET",
-        url: "searchterm/"+uid,
-        data: {'uid': uid,'pwd':$('.swal2-input').val()},
+        url: "searchterm/"+id.value,
+        
         cache: false,
         success: function(response) {
-           if(response==1){
-            Swal.fire(
-            "Success!",
-            "Password has been saved!",
-            "success"
-            );
-            location.reload();
-        }
+           alert(response);
         },
         
     });*/
