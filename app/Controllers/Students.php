@@ -7,7 +7,8 @@ class Students extends Controller
     // show users list
     public function index(){
         $tbl_student_term_dueModel = new tbl_student_term_dueModel();
-        $data['students'] = $tbl_student_term_dueModel->orderBy('id', 'DESC')->findAll();
+        $data['students'] = $tbl_student_term_dueModel->students_with_followup();
+        //$tbl_student_term_dueModel->orderBy('id', 'DESC')->findAll();
         $data['terms'] = $tbl_student_term_dueModel->termslist()->getResultArray();
         
        

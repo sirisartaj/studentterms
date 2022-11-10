@@ -28,6 +28,7 @@ class Followups extends Controller
             'next_follow_up' => date('Y-m-d H:i:s',strtotime($this->request->getVar('next_follow_up'))),
             'Overview' => $this->request->getVar('Overview'),
             'student_id' => $this->request->getVar('student_id'),           
+            'student_term_due_id' => $this->request->getVar('rid'),           
             'Status'  => $this->request->getVar('Status'),            
         ];
         //print_r($id);

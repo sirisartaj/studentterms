@@ -183,6 +183,7 @@
                 <div class="form-group">
         <label class="control-label">Terms</label>
            <select id="SelectType" name="SelectType" class="form-control form-white" required onChange="searchtermchnage(this);">
+          <option value="">choose...</option>
           <?php foreach($terms as $t){ ?> 
            <option value="<?php echo $t['term_name']; ?>"><?php echo $t['term_name']; ?></option>
          <?php } ?>
@@ -190,7 +191,7 @@
           </select>
                  </div>
          </div>
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
                 <div class="form-group">
            <label class="control-label">From</label>
            <div class="append-icon-default">
@@ -199,8 +200,8 @@
                     <span class="add-on"><i class="icon-th"></i></span> </div>
                   <i class="icon-calendar default-date-icon"></i> </div>
                  </div>
-              </div>
-        <div class="col-sm-3">
+              </div> -->
+        <!-- <div class="col-sm-3">
                 <div class="form-group">
         <label class="control-label">To</label>
            <div class="append-icon-default">
@@ -209,9 +210,9 @@
                     <span class="add-on"><i class="icon-th"></i></span> </div>
                   <i class="icon-calendar default-date-icon"></i> </div>
                  </div>
-              </div>
+              </div> -->
         
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
          <div class="form-group">
         <label class="control-label">Lead Status</label>
            <select id="LeadStatus" name="LeadStatus" class="form-control form-white" required>
@@ -223,7 +224,7 @@
            <option value="5">Under Review</option>
           </select>
                  </div>
-              </div>
+              </div> -->
             </div>
             <!-- /row-inner -->
       <hr class="m-t-10" />
@@ -232,14 +233,15 @@
               <table class="table" id="input_buttons">
                 <thead>
                   <tr>
-                    <th>Student Name</th>
-                    <th>Class</th>
-                    <th>Parent Name</th>
-                    <th>Fee type code</th>
-                    <th>Term Name</th>
-                    <th>Term Amount</th>
-                    <th>Father Mobile</th>
-                    <th>Paid Amount</th>
+                    <th>Name</th>
+                    <th>Course >> Section</th>
+                    <th>Admission Number</th>
+                    <th>Term Fee</th>
+                    <th>Term Due</th>
+                    <th>Point of Contact</th>
+                    <th>Phone Number</th>
+                    <th>term_name</th>
+                    <th>Followup On</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -251,12 +253,13 @@
                     <td><div class="user-image"><span><?php echo $student['Student_Name'][0];?></span></div>
                       <?php echo $student['Student_Name'];?></td>
                     <td><?php echo $student['Course_Name'].', '.$student['Section_Name'];?></td>
-                    <td><?php echo $student['Father_FullName'];?></td>
-                    <td><?php echo $student['Fee_type_code'];?></td>
-                    <td><?php echo $student['term_name'];?></td>
-                    <td><?php echo $student['term_amount']?></td>
+                    <td><?php echo $student['admission_number'];?></td>
+                    <td><?php echo $student['term_amount'];?></td>
+                    <td><?php echo $student['term_amount'] - $student['paid_amount'];?></td>
+                    <td><?php echo $student['Father_FullName']?></td>
                     <td><?php echo $student['Father_mobile_number'];?></td>
-                    <td class="text-warning"><?php echo $student['paid_amount'];?></td>
+                    <td class="text-warning"><?php echo $student['term_name'];?></td>
+                    <td class="text-warning"><?php echo $student['followupon'];?></td>
                     <td class="text-right">
 
          <a class="link-btn" data-rel="tooltip" data-placement="bottom" title="Follow Up" href="<?php echo site_url('/Followups/'.$student['student_id'].'/'.$student['id']);?>"><i class="icon-user-follow"></i></a>

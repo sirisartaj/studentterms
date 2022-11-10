@@ -37,8 +37,9 @@ class tbl_student_term_dueModel extends Model
        return $role = $this->db->where('iduserrole',$id);
     }
 
-    function adduser($user_id_array){
+    function students_with_followup(){
 
+        return $this->query("SELECT s.*,f.created_at followupon FROM tbl_student_term_due s left join followups f on s.student_id=f.student_id ")->getResultArray();
       // return $user = $userModel->find($user_id);
     }
 
