@@ -38,7 +38,8 @@ $routes->set404Override();
 
 
 $routes->get('students', 'Students::index');
-
+$routes->get('Followups/(:any)', 'Followups::index/$1');
+$routes->post('submitForm', 'Followups::store');
 
 /*
  * --------------------------------------------------------------------

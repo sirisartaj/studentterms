@@ -14,7 +14,7 @@ class tbl_student_term_dueModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['*'];
+    protected $allowedFields = [];
 
     //protected $useTimestamps = false;
     protected $createdField  = 'created_at';
