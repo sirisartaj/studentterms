@@ -182,7 +182,7 @@
       <div class="col-sm-3">
                 <div class="form-group">
         <label class="control-label">Terms</label>
-           <select id="SelectType" name="SelectType" class="form-control form-white" required onChange="searchtermchnage();">
+           <select id="SelectType" name="SelectType" class="form-control form-white" required onChange="searchtermchnage(this);">
           <?php foreach($terms as $t){ ?> 
            <option value="<?php echo $t['term_name']; ?>"><?php echo $t['term_name']; ?></option>
          <?php } ?>
@@ -356,8 +356,28 @@
 <a href="https://sirians.xyz/dgtl/#" class="scrollup"><i class="fa fa-angle-up"></i></a> 
 <?php echo view('js_footer');?>
 <script>
-  function searchtermchnage(){
-    alert('hi');
+  oTable = $('#input_buttons').DataTable();  
+
+  function searchtermchnage(id){
+    alert(id.value);
+    oTable.search(id.value).draw() ;
+    /*$.ajax({
+        method: "GET",
+        url: "searchterm/"+uid,
+        data: {'uid': uid,'pwd':$('.swal2-input').val()},
+        cache: false,
+        success: function(response) {
+           if(response==1){
+            Swal.fire(
+            "Success!",
+            "Password has been saved!",
+            "success"
+            );
+            location.reload();
+        }
+        },
+        
+    });*/
   }
 </script>
 </body>
