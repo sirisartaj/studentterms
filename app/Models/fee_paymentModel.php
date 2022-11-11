@@ -41,9 +41,6 @@ class fee_paymentModel extends Model
        return $this->query("SELECT * FROM student_fee s")->getResultArray();
     }
 
-    public function batchinserthistory($data = false)
-    {
-        return $this->db->insert_batch('payed_type_history', $data); 
-    }
+    
     
 }

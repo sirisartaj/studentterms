@@ -16,7 +16,7 @@
 
   }
 </style>
-<div style="margin: 50px;height: 100px;"></div>
+<div style="margin: 50px;height: 100px;"><?php //session_start(); echo ($_SESSION['message'])?$_SESSION['message']:'';?></div>
 <div class="container">
   <form class="form" method="post" id="savepayment" action="<?= site_url('/submitpayment') ?>" onsubmit="return savepayment();">
   <input id="student_id" name="student_id" type="hidden" value="<?php echo $student_id;?>"/>

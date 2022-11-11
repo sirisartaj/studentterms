@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 use App\Models\fee_paymentModel;
+use App\Models\payed_type_historyModel;
 use CodeIgniter\Controller;
 class fee_payments extends Controller
 {
@@ -23,7 +24,9 @@ class fee_payments extends Controller
  
     // insert data
     public function store() {
+        //$this->load->library('session');
         $fee_paymentModel = new fee_paymentModel();
+        
         
 
         $data = [
@@ -41,17 +44,18 @@ class fee_payments extends Controller
         $get_fee_types = $fee_paymentModel->get_fee_types($class);
         
         foreach($get_fee_types as $get_fee_type){
-           $hdata['fee_amount'][$get_fee_type['priority']]=$this->request->getVar($get_fee_type['priority']);
-           $hdata['fee_type_id'][$get_fee_type['priority']]=$get_fee_type['id'];
-           $hdata['student_fee_payments_id'][$get_fee_type['priority']]=$fee_payment_id;
-           $hdata['created_at'][$get_fee_type['priority']]=date('Y-m-d H:i:s');
+           $hdata[$get_fee_type['priority']]['fee_amount']=$this->request->getVar($get_fee_type['priority']);
+           $hdata[$get_fee_type['priority']]['fee_type_id']=$get_fee_type['id'];
+           $hdata[$get_fee_type['priority']]['student_fee_payments_id']=$fee_payment_id;
+           $hdata[$get_fee_type['priority']]['created_at']=date('Y-m-d H:i:s');
            
         }
-        
-        $fee_paymentModel->batchinserthistory($hdata);  
+        $payed_type_historyModel = new payed_type_historyModel();
+        //echo "<pre>";print_r($hdata);exit;
+        $payed_type_historyModel->batchinserthistory($hdata);  
 
-
-        return $this->response->redirect(site_url('/usersList'));
+        //$_SESSION['message'] ='payment updated';
+        return $this->response->redirect(site_url('/fee_payments/'.$data['student_id']));
     }
     // show single user
     public function singleUser($id = null){
