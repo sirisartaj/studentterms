@@ -67,6 +67,7 @@
     if(amt && v){
       
    $('#error_amt').html('');
+   $('#error_class').html('');
     var clsarr =JSON.parse(cls);
     balance = amt;
     var str = '<div class="row">';
@@ -102,9 +103,15 @@
     console.log(clsarr[v.value]);
     
   }else{
-    $('#error_amt').html('please fill the payed amount');
-    alert('please fill the payed amount');
-    $('#class').val('');
+    if($('#amount').val()==''){
+      $('#error_amt').html('please fill the payed amount');
+    }
+    if($('#class').val()==''){
+      $('#error_class').html('please fill the payed amount');
+    }
+    
+    alert('please fill the payed amount and class feilds');
+    //$('#class').val('');
   }
 
   }
