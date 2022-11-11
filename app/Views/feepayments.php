@@ -23,7 +23,7 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="amount">Pay Amount</label>
-      <input type="text" class="form-control" id="amount" name="payed_amount" placeholder="Amount">
+      <input type="text" class="form-control" id="amount" name="payed_amount" placeholder="Amount" onChange="onclasschange(this);">
       <span id="error_amt" class="text-danger" ></span>
     </div>
     <div class="form-group col-md-6">
@@ -59,28 +59,40 @@
 </form>
 </div>
 <script>
-  function onclasschange(v){
-    
+  function onclasschange(abc){
+    var v =$('#class').val();
     var amt = $('#amount').val();
     var cls ='<?php echo $string_class;?>';
-    if(amt){
+    var reamainbal=0;
+    if(amt && v){
       
    $('#error_amt').html('');
     var clsarr =JSON.parse(cls);
     balance = amt;
     var str = '<div class="row">';
-    $.each(clsarr[v.value], function( index, value ) {
+    $.each(clsarr[$('#class').val()], function( index, value ) {
       
-      var feeamt = value["fee_amount"];
-     
-      if(parseInt(amt) >= parseInt(feeamt)){
+      var feeamt = parseInt(value["fee_amount"]);
+     //alert(parseInt(balance) +' :' + feeamt);
+      if(parseInt(balance) > 0 && parseInt(balance) >= feeamt){
         
         var typval = value['fee_amount'];
-        balance = amt-value['fee_amount'];
+        reamainbal = parseInt(balance)-parseInt(value['fee_amount']);
+        //alert(value["id"]+' : '+parseInt(balance));
       }else{
         
-        var typval = balance;
+        var typval = parseInt(balance);
       }
+      balance = reamainbal;
+      if(parseInt(balance) > 0){
+        
+        //balance = parseInt(balance)-parseInt(value['fee_amount']);
+      //  console.log(a+" : a ");
+        console.log(balance+ " : balance");
+      }else{
+        balance = 0;
+      }
+      
       str +='<div class="form-group col-md-6"><label for="class">'+value["fee_type"]+'</label><input name="'+value["id"]+'" value="'+typval+'" id="'+value["id"]+'" rel1="'+value["fee_amount"]+'" rel="'+value["fee_type"]+'" onblur="checkmax(this,'+value["fee_amount"]+');" class="calamt"><span id="span'+value["id"]+'" ></span></div>';
     });
     str +='</div>';
