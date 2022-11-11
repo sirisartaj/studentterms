@@ -75,9 +75,9 @@
       
       var feeamt = parseInt(value["fee_amount"]);
      //alert(parseInt(balance) +' :' + feeamt);
-      if(parseInt(balance) > 0 && parseInt(balance) >= feeamt){
+      if((parseInt(balance) > 0) && (parseInt(balance) >= feeamt)){
         
-        var typval = value['fee_amount'];
+        var typval = feeamt;
         reamainbal = parseInt(balance)-parseInt(value['fee_amount']);
         //alert(value["id"]+' : '+parseInt(balance));
       }else{
@@ -128,16 +128,20 @@ function checkmax(v,maxamt){
 
 function savepayment(){
 
+var filledamt =0;
+
   console.log($('.calamt').length);
   if($('.calamt').length > 0){
 
   
   $('.calamt').each(function(){
-    alert(this.id);
+    //alert(this.id);
     var maxamt =$('#'+v.id).attr('rel1');
+    filledamt = filledamt + parseInt(this.val());
     var retfalse = checkmax(this,maxamt);
-    alert(retfalse);
+    //alert(filledamt);
   });
+console.log(filledamt);
 }else{
   var error =0;
   if($('#amount').val()=='')
@@ -168,7 +172,13 @@ function savepayment(){
   if(error){
     return false;
   }else{
-    $('#savepayment').submit();
+    if(parseInt($('#amount').val()) < filledamt){
+  alert('In correct ');
+  return false;
+}else{
+   $('#savepayment').submit();
+}
+   
   }
 
 }

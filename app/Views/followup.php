@@ -40,6 +40,7 @@
                       <input type="hidden" name="student_id" value="<?php echo $student_id; ?>"/>
                       <input type="hidden" name="rid" value="<?php echo $rid; ?>"/>
                       <input type="text" placeholder="Executive" class="form-control form-white" id="Executive" name="executive" required>
+                      <span></span>
                     </div>
                   </div>
                   <div class="col-sm-6">
