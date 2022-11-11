@@ -12,15 +12,19 @@
     line-height: 30px;
     margin: 10px;
   }
+  .error{
+
+  }
 </style>
 <div style="margin: 50px;height: 100px;"></div>
 <div class="container">
-  <form class="form" method="post" onsubmit="return savepayment();">
+  <form class="form" method="post" id="savepayment" action="<?= site_url('/submitpayment') ?>" onsubmit="return savepayment();">
+  <input id="student_id" name="student_id" type="hidden" value="<?php echo $student_id;?>"/>
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="amount">Pay Amount</label>
       <input type="text" class="form-control" id="amount" name="payed_amount" placeholder="Amount">
-      <span id="error_amt" style="color: red;"></span>
+      <span id="error_amt" class="text-danger" ></span>
     </div>
     <div class="form-group col-md-6">
       <label for="class">class</label>
@@ -32,6 +36,7 @@
           <option value="<?php echo $k; ?>"><?php echo $k; ?></option>
       <?php } ?>
       </select>
+      <span id="error_class" class="text-danger"></span>
     </div>
 
     <div class="form-group col-md-6">
@@ -43,7 +48,8 @@
 
     <div class="form-group col-md-6">
       <label for="balance">balance</label>
-      <input type="text" class="form-control" name="balance" id="balance" placeholder="balance">
+      <input type="text" class="form-control disable" name="balance" id="balance" placeholder="balance" >
+      <span id="error_balance" class="text-danger"></span>
     </div>
   </div>
   
@@ -54,8 +60,7 @@
 </div>
 <script>
   function onclasschange(v){
-
-    alert(v.value);
+    
     var amt = $('#amount').val();
     var cls ='<?php echo $string_class;?>';
     if(amt){
@@ -65,15 +70,15 @@
     balance = amt;
     var str = '<div class="row">';
     $.each(clsarr[v.value], function( index, value ) {
-      alert( amt +" : "+index+ ": " + value["fee_amount"]);
+      
       var feeamt = value["fee_amount"];
-      alert((parseInt(amt) +'>'+parseInt(feeamt)));
+     
       if(parseInt(amt) >= parseInt(feeamt)){
-        alert(feeamt);
+        
         var typval = value['fee_amount'];
         balance = amt-value['fee_amount'];
       }else{
-        alert('else'+feeamt);
+        
         var typval = balance;
       }
       str +='<div class="form-group col-md-6"><label for="class">'+value["fee_type"]+'</label><input name="'+value["id"]+'" value="'+typval+'" id="'+value["id"]+'" rel1="'+value["fee_amount"]+'" rel="'+value["fee_type"]+'" onblur="checkmax(this,'+value["fee_amount"]+');" class="calamt"><span id="span'+value["id"]+'" ></span></div>';
@@ -83,7 +88,7 @@
     $('#balance').val(balance);
 
     console.log(clsarr[v.value]);
-    //alert(cls);
+    
   }else{
     $('#error_amt').html('please fill the payed amount');
     alert('please fill the payed amount');
@@ -104,12 +109,50 @@ function checkmax(v,maxamt){
 
 function savepayment(){
 
+  console.log($('.calamt').length);
+  if($('.calamt').length > 0){
+
   
   $('.calamt').each(function(){
-    //alert(this.id);
+    alert(this.id);
     var maxamt =$('#'+v.id).attr('rel1');
-    checkmax(this,maxamt);
-})
+    var retfalse = checkmax(this,maxamt);
+    alert(retfalse);
+  });
+}else{
+  var error =0;
+  if($('#amount').val()=='')
+  {
+    $('#error_amt').html('please fill the payed amount');
+    error =1;
+  }else{
+    $('#error_amt').html('');
+  }
+
+  if($('#class').val()=='')
+  {
+    $('#error_class').html('please fill the payed amount');
+    error =1;
+  }else{
+    $('#error_class').html('');
+  }
+
+
+  if(error== 0 && $('#balance').val()=='')
+  {
+    $('#error_balance').html('Something went wrong');
+    error =1;
+  }else{
+    $('#error_balance').html('');
+  }
+
+  if(error){
+    return false;
+  }else{
+    $('#savepayment').submit();
+  }
+
+}
 //return false;
 }
 

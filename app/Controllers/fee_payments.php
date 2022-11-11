@@ -13,10 +13,7 @@ class fee_payments extends Controller
             $data['class'][$g['class']][$g['priority']] = $g;
 
         }
-        //echo "<hr/>class";
-        //print_r($class);
-                //exit;
-      // array_keys($data['class']));exit;
+        $data['student_id'] = $student_id;
         return view('feepayments', $data);
     }
     // add user form
@@ -26,34 +23,34 @@ class fee_payments extends Controller
  
     // insert data
     public function store() {
-        $userModel = new UserModel();
-        $role=explode('_', $this->request->getVar('UserRole')); 
+        $fee_paymentModel = new fee_paymentModel();
+        
 
         $data = [
-            'LoginID' => $this->request->getVar('DisplayName').'_'.$this->request->getVar('Mobile'),//$this->request->getVar('LoginID'),
-            'Password' => $this->request->getVar('Password'),
-            'DisplayName' => $this->request->getVar('DisplayName'),
-            'Name' => $this->request->getVar('Name'),
-            'SurName' => $this->request->getVar('SurName'),
-            'Gender' => $this->request->getVar('Gender'),
-            'EmailID'  => $this->request->getVar('EmailID'),
-            'Phone'  => $this->request->getVar('Phone'),
-            'Mobile'  => $this->request->getVar('Mobile'),
-            'Address1'  => $this->request->getVar('Address1'),
-            'Address2'  => $this->request->getVar('Address2'),
-            'idCountry'  => $this->request->getVar('idCountry'),
-            'idState'  => $this->request->getVar('idState'),
-            'idCity'  => $this->request->getVar('idCity'),
-            'idTimeZone'  => 1,
-            'idLocale'  => 1,
-            'Status'  => 'Active',
-            'UserType'  => 'User',
-            'isSuperAdmin'  => 0,
-            'DOB'  => $this->request->getVar('DOB'),
-            'UserRole'  => $role[0],
-            'idUserRole'  => $role[1],
+            'student_id' => $this->request->getVar('student_id'),
+            'payed_amount' => $this->request->getVar('payed_amount'),
+            'balance' => $this->request->getVar('balance'),
+            'status' => 0,
+            'created_at' => date('Y-m-d H:i:s'),
+            
         ];
-        $userModel->insert($data);
+        $fee_paymentModel->insert($data);
+        $fee_payment_id = $fee_paymentModel->getInsertID();
+        $class=$this->request->getVar('class');
+       
+        $get_fee_types = $fee_paymentModel->get_fee_types($class);
+        
+        foreach($get_fee_types as $get_fee_type){
+           $hdata['fee_amount'][$get_fee_type['priority']]=$this->request->getVar($get_fee_type['priority']);
+           $hdata['fee_type_id'][$get_fee_type['priority']]=$get_fee_type['id'];
+           $hdata['student_fee_payments_id'][$get_fee_type['priority']]=$fee_payment_id;
+           $hdata['created_at'][$get_fee_type['priority']]=date('Y-m-d H:i:s');
+           
+        }
+        
+        $fee_paymentModel->batchinserthistory($hdata);  
+
+
         return $this->response->redirect(site_url('/usersList'));
     }
     // show single user

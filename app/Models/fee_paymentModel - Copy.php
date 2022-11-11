@@ -28,10 +28,12 @@ class fee_paymentModel extends Model
     
     public function getpayments($id = false)
     {
+        //$this->join('tbl_student_term_due student','student.student_id = followups.student_id','right');
+       //return $this->where(['student.student_id' => $id])->group_by('student.student_id')->findAll();
 
         return $this->where('student_id',$id)->findAll();
 
-      
+      // return $this->query(" SELECT * FROM tbl_student_term_due s left join followups f on s.student_id=f.student_id where s.student_id=$id GROUP BY s.student_id")->getResultArray();
     } 
     public function get_fee_types($class = false)
     {
@@ -39,11 +41,6 @@ class fee_paymentModel extends Model
             return $this->query("SELECT * FROM student_fee s where class='".$class."' order by priority DESC")->getResultArray();
         }
        return $this->query("SELECT * FROM student_fee s")->getResultArray();
-    }
-
-    public function batchinserthistory($data = false)
-    {
-        return $this->db->insert_batch('payed_type_history', $data); 
     }
     
 }
