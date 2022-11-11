@@ -65,12 +65,15 @@
     balance = amt;
     var str = '<div class="row">';
     $.each(clsarr[v.value], function( index, value ) {
-      //alert( index + ": " + value['class']);
-      if(amt >= value['fee_amount']){
-        alert(value['fee_amount']);
+      alert( amt +" : "+index+ ": " + value["fee_amount"]);
+      var feeamt = value["fee_amount"];
+      alert((parseInt(amt) +'>'+parseInt(feeamt)));
+      if(parseInt(amt) >= parseInt(feeamt)){
+        alert(feeamt);
         var typval = value['fee_amount'];
         balance = amt-value['fee_amount'];
       }else{
+        alert('else'+feeamt);
         var typval = balance;
       }
       str +='<div class="form-group col-md-6"><label for="class">'+value["fee_type"]+'</label><input name="'+value["id"]+'" value="'+typval+'" id="'+value["id"]+'" rel1="'+value["fee_amount"]+'" rel="'+value["fee_type"]+'" onblur="checkmax(this,'+value["fee_amount"]+');" class="calamt"><span id="span'+value["id"]+'" ></span></div>';
